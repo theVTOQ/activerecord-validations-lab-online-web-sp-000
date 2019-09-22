@@ -7,13 +7,15 @@ class Post < ActiveRecord::Base
 
   def clickbait?
     phrases = ["Won't Believe", "Secret", "Guess"]
-    if title_contains_one_of_these_phrases?(title, phrases) || title =~/(Top )[\d]/
+    conforms = title_contains_one_of_these_phrases?(title, phrases) || title =~/(Top )[\d]/
+    if !conforms
       error_message = "must exist, and must contain at least one of these phrases: \"" + phrases.join("\", \"")
       errors.add(:title, error_message + ", or Top [number]")
     end
   end
 
   def title_contains_one_of_these_phrases?(title, phrases)
+    #binding.pry
     return false if title == nil
     phrases.each {|phrase| return true if title.include?(phrase)}
     false
