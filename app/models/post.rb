@@ -8,8 +8,8 @@ class Post < ActiveRecord::Base
   def clickbait?
     phrases = ["Won't Believe", "Secret", "Guess"]
     conforms = title_contains_one_of_these_phrases?(title, phrases) || (title =~/(Top )[\d]/) != nil
-    if
-      error_message = "must contain one of these phrases: \"" + phrases.join("\", \"")
+    if title == nil || !conforms
+      error_message = "must exist, and must contain at least one of these phrases: \"" + phrases.join("\", \"")
       errors.add(:title, error_message + ", or Top [number]")
     end
   end
