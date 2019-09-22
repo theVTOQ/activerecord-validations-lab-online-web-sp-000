@@ -15,7 +15,6 @@ class Post < ActiveRecord::Base
   end
 
   def title_contains_one_of_these_phrases?(phrases)
-    #binding.pry
     return false if title == nil
     phrases.each {|phrase| return true if title.include?(phrase)}
     false
